@@ -141,29 +141,35 @@ filetype plugin indent on
 " Vundle end
 "
 call plug#begin('~/.vim/plugged')
+Plug 'tomasiser/vim-code-dark'
 Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
 Plug 'preservim/nerdcommenter'
 Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
 " Plug 'maximbaz/lightline-ale'
 call plug#end()
 
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-let g:solarized_bold=0
-let g:solarized_underline=0
-let g:solarized_italic=1
+" let g:solarized_termcolors=256
+" let g:solarized_termtrans=1
+" let g:solarized_bold=0
+" let g:solarized_underline=0
+" let g:solarized_italic=1
 
 set laststatus=2
-"if !has('gui_running')
-set t_Co=256
-"endif
 set noshowmode
 syntax on
-set background=dark
-colorscheme solarized
+" set background=dark
+" colorscheme solarized
+set t_Co=256
+" set t_ut=r
+
+let g:codedark_conservative = 0
+colorscheme codedark
 let g:lightline= {
-  \ 'colorscheme': 'onedark',
+  \ 'colorscheme': 'codedark',
   \ }
 
 " /* vim-airline
@@ -276,7 +282,7 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let g:cpp_posix_standard = 1
-let g:cpp_experimental_simple_template_highlight = 1
+" let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 "let g:cpp_no_function_highlight = 1
@@ -361,7 +367,6 @@ let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_save = 1
 " let g:ale_lint_on_text_changed = 'never'
-" if you don't want linters to run on opening a file
 
 let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
@@ -380,3 +385,15 @@ let g:ale_c_parse_makefile = 0
 
 " ale */
 
+
+" /* vim-lsp
+"
+" let g:lsp_fold_enabled = 0
+" let g:lsp_diagnostics_enabled = 0
+" let g:lsp_signs_enabled =  1
+" let g:lsp_diagnostics_echo_cursor = 1
+" let g:lsp_highlights_enabled = 1
+" let g:lsp_textprop_enabled = 1
+" let g:lsp_highlight_references_enabled = 1
+
+" vim-lsp */
