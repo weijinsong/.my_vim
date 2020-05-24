@@ -121,42 +121,27 @@ set tags=tags
 imap{ {}<ESC>i
 "set cursorcolumn
 "
-" Vundle begin
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-" Plugin 'itchyny/lightline.vim'
-Plugin 'preservim/nerdtree'
-Plugin 'zxqfl/tabnine-vim'
-Plugin 'iamcco/mathjax-support-for-mkdp'
-Plugin 'iamcco/markdown-preview.vim'
-" Plugin 'Yggdroot/LeaderF'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-call vundle#end()
-filetype plugin indent on
-" Vundle end
 "
 call plug#begin('~/.vim/plugged')
+Plug 'preservim/nerdtree'
+Plug 'zxqfl/tabnine-vim'
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 Plug 'tomasiser/vim-code-dark'
 Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
 Plug 'preservim/nerdcommenter'
 Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
+
 " Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/vim-lsp'
 " Plug 'mattn/vim-lsp-settings'
 " Plug 'maximbaz/lightline-ale'
 call plug#end()
-
-" let g:solarized_termcolors=256
-" let g:solarized_termtrans=1
-" let g:solarized_bold=0
-" let g:solarized_underline=0
-" let g:solarized_italic=1
 
 set laststatus=2
 set noshowmode
@@ -179,7 +164,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
 " vim-airline */
 
-
 " nerdtree settings
 "
 map <C-n> :NERDTreeToggle<CR>
@@ -187,42 +171,15 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
 
-" nine
-
 " /*markdown Preview
-
     let g:mkdp_path_to_chrome = "firefox"
-    " Path to the chrome or the command to open chrome (or other modern browsers).
-    " If set, g:mkdp_browserfunc would be ignored.
-
     let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
-    " Callback Vim function to open browser, the only parameter is the url to open.
-
     let g:mkdp_auto_start = 0
-    " Set to 1, Vim will open the preview window on entering the Markdown
-    " buffer.
-
     let g:mkdp_auto_open = 0
-    " Set to 1, Vim will automatically open the preview window when you edit a
-    " Markdown file.
-
     let g:mkdp_auto_close = 1
-    " Set to 1, Vim will automatically close the current preview window when
-    " switching from one Markdown buffer to another.
-
     let g:mkdp_refresh_slow = 0
-    " Set to 1, Vim will just refresh Markdown when saving the buffer or
-    " leaving from insert mode. With default 0, it will automatically refresh
-    " Markdown as you edit or move the cursor.
-
     let g:mkdp_command_for_global = 0
-    " Set to 1, the MarkdownPreview command can be used for all files,
-    " by default it can only be used in Markdown files.
-
     let g:mkdp_open_to_the_world = 0
-    " Set to 1, the preview server will be available to others in your network.
-    " By default, the server only listens on localhost (127.0.0.1).
-
 " markdown Preivew */
 
 " /* fzf
