@@ -112,7 +112,7 @@ set shiftwidth=4
 set expandtab
 set number
 set hlsearch
-" autocmd BufEnter * lcd %:p:h
+autocmd BufEnter * lcd %:p:h
 set wrap! 
 set nocp
 set tags=tags
@@ -124,23 +124,19 @@ imap{ {}<ESC>i
 "
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'zxqfl/tabnine-vim'
+" Plug 'zxqfl/tabnine-vim'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
 Plug 'tomasiser/vim-code-dark'
 Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
+" Plug 'Yggdroot/LeaderF'
 Plug 'preservim/nerdcommenter'
 Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
-
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'maximbaz/lightline-ale'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 set laststatus=2
@@ -207,8 +203,8 @@ let g:Lf_UseCache = 1
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 " popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
+" let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
@@ -226,6 +222,7 @@ noremap go :<C-U>Leaderf! rg --recall<CR>
 
 " should use `Leaderf gtags --update` first
 let g:Lf_GtagsAutoGenerate = 1
+" let g:Lf_Gtagslabel = 'default'
 let g:Lf_Gtagslabel = 'native-pygments'
 noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -257,47 +254,17 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " nerdcomment */
 
-
-" /* lightline-ale
-" let g:lightline = {}
-" let g:lightline.component_expand = {
-"       \  'linter_checking': 'lightline#ale#checking',
-"       \  'linter_infos': 'lightline#ale#infos',
-"       \  'linter_warnings': 'lightline#ale#warnings',
-"       \  'linter_errors': 'lightline#ale#errors',
-"       \  'linter_ok': 'lightline#ale#ok',
-"       \ }
-" let g:lightline.component_type = {
-"       \     'linter_checking': 'right',
-"       \     'linter_infos': 'right',
-"       \     'linter_warnings': 'warning',
-"       \     'linter_errors': 'error',
-"       \     'linter_ok': 'right',
-"       \ }
-" let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ]] }
-" let g:lightline#ale#indicator_checking = "C:"
-" let g:lightline#ale#indicator_infos = "I:"
-" let g:lightline#ale#indicator_warnings = "W:"
-" let g:lightline#ale#indicator_errors = "E:"
-" let g:lightline#ale#indicator_ok = "*"
-"
-" lightline */
-
 " /* ale
-
 " quickfix list
 let g:ale_set_loclist = 0
 let g:ale_set_qucikfix = 1
-
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 1
-
 let g:ale_list_window_size = 5
-
 " let g:ale_linters_explicit = 1
-let g:ale_completion_delay = 500
-let g:ale_echo_delay = 20
-let g:ale_lint_delay = 500
+let g:ale_completion_delay = 10
+let g:ale_echo_delay = 2
+let g:ale_lint_delay = 10
 " let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 1
 let g:airline#extensions#ale#enabled = 1
@@ -315,7 +282,6 @@ hi! SpellCap gui=undercurl guisp=blue
 hi! SpellRare gui=undercurl guisp=magenta
 
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-" let g:ale_statusline_format = ['E %d', 'W %d', '* ok']
 nmap <silent> <C-k> <Plug>(ale_previous_warp)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <leader>ad <Plug>(ale_detail)
@@ -329,28 +295,15 @@ let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
 " let g:ale_c_cppcheck_options = ''
 " let g:ale_cpp_cppcheck_options = ''
-
 let g:ale_linter = {
             \ 'c++' : ['clang'],
             \ 'c' : ['clang'],
             \}
-
 let g:ale_c_build_dir_names = ['build', 'bin']
 let g:ale_c_build_dir = './' 
 let g:ale_c_parse_compile_commands = 1
 let g:ale_c_parse_makefile = 0
-
 " ale */
 
-
-" /* vim-lsp
-"
-" let g:lsp_fold_enabled = 0
-" let g:lsp_diagnostics_enabled = 0
-" let g:lsp_signs_enabled =  1
-" let g:lsp_diagnostics_echo_cursor = 1
-" let g:lsp_highlights_enabled = 1
-" let g:lsp_textprop_enabled = 1
-" let g:lsp_highlight_references_enabled = 1
-
-" vim-lsp */
+" coc.nvim
+source ~/.vim/coc_vimrc
