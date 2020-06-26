@@ -1,0 +1,100 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+# === 
+# === module create
+snippet mod "module ...() ... endmodule " b
+module ${1:name}(${2:#port})
+${0:#design}
+endmodule
+
+endsnippet
+
+# === module with parameter
+snippet modp "module ... #(...)(...)... endmodule" b
+module ${1:name} #(
+${2:// parameter}
+)(
+${3:// port}
+);
+
+
+${0:// design}
+
+endmodule
+endsnippet
+
+# === always create
+snippet alw "always @(....)" b
+always @(${1://trigger})
+	${0:// body}
+endsnippet
+
+snippet alwp "always @(...) begin end" b
+always @(${1://trigger})
+begin
+	${0:// body}
+end
+endsnippet
+
+snippet alwc "always @(posedge ${1:clk} or negedge ${2:nrst})" b
+begin
+	if (~${2::nrst}) begin
+		${3:// reset}
+	end else begin
+		${0:// body}	
+	end
+end
+endsnippet
+
+# === switch 
+snippet case "case(...) \n...\n endcase"
+case(${1})
+	${0:// body}
+
+	default : 
+		${2:// default}
+endcase
+endsnippet
+
+# === if
+
+# === generate
+snippet forg "generate for(...) ... endgenerate"
+generate
+	genvar ${1:// genvar}
+	for (${2://range})
+	begin:x_${3:name}
+		${0:/body}
+	end
+endgenerate
+endsnippet
+
+# === timescale
+snippet time "Description" b
+\`timescale ${1}/${2}
+${0}
+endsnippet
+

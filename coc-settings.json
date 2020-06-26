@@ -1,0 +1,21 @@
+{
+    "languageserver":{
+        "ccls":{
+            "command"       : "ccls" ,
+            "filetypes"     : ["c", "cpp", "cuda", "objc", "objcpp", "h", "hpp", "cc"],
+            "rootPatterns"  : [".ccls-root", "compile_commands.json"],
+            "initializationOPtions" : {
+                "cache": {
+                    "directory" : ".ccls-cache"
+                },
+                "client" : {
+                    "snippetSupport" : true
+                }
+            }
+        },
+        "svls": {
+            "command": "svls",
+            "filetypes": ["systemverilog","verilog"]
+        }
+    }
+}
