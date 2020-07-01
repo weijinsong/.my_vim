@@ -2,6 +2,17 @@
 " Last change:	2020 Jun 23
 "
 " When started as "evim", evim.vim will already have done these settings.
+" 
+
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
+                        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+endif
+
+
+
 if v:progname =~? "evim"
   finish
 endif
@@ -76,11 +87,19 @@ set lazyredraw
 set visualbell
 set updatetime=1000
 set virtualedit=block
+set nobackup
+set undofile
+set swapfile
+set undodir=~/.undodir
+
 
 "===
 "=== Terminal Behaviors
 "===
 let g:neoterm_autoscroll=1
+autocmd TermOpen term://* startinsert
+command! Term  :set splitbelow |split |res -20 |term
+command! Vterm :set splitright |vsplit |term
 
 "===
 "=== Basic Mappings 
@@ -129,7 +148,7 @@ noremap \s :%s//g<left><left>
 "=== Install Vim Plug ===
 "===
 call plug#begin('~/.vim/plugged')
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 
 " General Highlighter
 " Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase'}
@@ -169,13 +188,13 @@ Plug 'mbbill/undotree'
 " Plug 'Chie192/vim-autoformat'
 
 " verilog_systemverilog
-" Plug 'vhda/verilog_systemverilog.vim'
+Plug 'vhda/verilog_systemverilog.vim'
 
 " Tex
 " Plug 'legvag/vimtex'
 
 " JSON
-Plug 'elzr/vim-json'
+" Plug 'elzr/vim-json'
 
 " Markdown
 Plug 'iamcco/mathjax-support-for-mkdp'
@@ -224,11 +243,13 @@ set termguicolors
 
 " carbonized 
 colorscheme carbonized-dark
+
 let g:lightline= {
   \ 'colorscheme': 'codedark',
   \ }
 let g:carbonized_dark_CursorLineNr = 'on'
 let g:carbonized_dark_LineNr = 'off'
+
 
 " colorscheme deep-space
 
@@ -247,6 +268,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " ===
 " === Nerdtree 
@@ -289,6 +311,10 @@ noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand
 noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
 noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+let g:Lf_CommandMap = {'<C-K>': ['<Up>']
+                   \ , '<C-J>': ['<Down>']
+                   \ , '<C-X>': ['<C-N>']
+                   \ , '<C-]>': ['<C-M>']}
 
 "===
 "=== vim-cpp-enhanced-highlight 
@@ -318,69 +344,165 @@ let g:NERDToggleCheckAllLines = 1
 "===
 "=== ale
 "===
-" let g:ale_set_loclist = 0
-" let g:ale_set_qucikfix = 1
-" let g:ale_open_list = 1
-" let g:ale_keep_list_window_open = 1
-" let g:ale_list_window_size = 5
-" " let g:ale_linters_explicit = 1
-" let g:ale_completion_delay = 10
-" let g:ale_echo_delay = 2
-" let g:ale_lint_delay = 10
-" " let g:ale_sign_column_always = 1
-" let g:ale_set_highlights = 1
-" let g:airline#extensions#ale#enabled = 1
-" let g:ale_echo_msg_error_str = 'E'
-" let g:ale_echo_msg_warning_str = 'W'
-" let g:ale_ech_msg_format = '[%linter%] %s [%severity%]'
-"
-" let g:ale_sign_error = '>>'
-" let g:ale_sign_warning = '--'
-" hi! clear SpellBad
-" hi! clear SpellCap
-" hi! clear SpellRare
-" hi! SpellBad gui=undercurl guisp=red
-" hi! SpellCap gui=undercurl guisp=blue
-" hi! SpellRare gui=undercurl guisp=magenta
-"
-" let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-" nmap <silent> <C-k> <Plug>(ale_previous_warp)
-" nmap <silent> <C-j> <Plug>(ale_next_wrap)
-" nmap <silent> <leader>ad <Plug>(ale_detail)
-"
-" let g:ale_lint_on_text_changed = 'normal'
-" let g:ale_lint_on_insert_leave = 1
-" let g:ale_lint_on_save = 1
-" " let g:ale_lint_on_text_changed = 'never'
-"
-" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-" " let g:ale_c_cppcheck_options = ''
-" " let g:ale_cpp_cppcheck_options = ''
-" let g:ale_linter = {
-"             \ 'c++' : ['clang'],
-"             \ 'c' : ['clang'],
-"             \ 'systemverilog' : ['verilator']
+let g:ale_set_loclist = 0
+let g:ale_set_qucikfix = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 1
+let g:ale_list_window_size = 5
+" let g:ale_linters_explicit = 1
+" let g:ale_completion_delay = 0
+" let g:ale_echo_delay = 0
+" let g:ale_lint_delay = 0
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 1
+let g:airline#extensions#ale#enabled = 0
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_ech_msg_format = '[%linter%] %s [%severity%]'
+
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
+
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+nmap <silent> <C-k> <Plug>(ale_previous_warp)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <leader>ad <Plug>(ale_detail)
+
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_save = 1
+let g:ale_disable_lsp = 1
+let g:ale_linters_explicit = 1
+" let g:ale_linters_ingore = {
+"                     \ 'c++' : ['clang'],
+"                     \ 'c' : ['clang']
+"                     \}
+
+" let g:ale_pattern_options = {
+"                     \  '\.c': {'ale_enable':0}
+"                     \, '\.cpp' : {'ale_enable':0}
+"                     \, '\.h' : {'ale_enable':0}
+"                     \ }
+
+" let g:ale_lint_on_text_changed = 'never'
+
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+
+" let g:ale_linters = {
+"             \ 'c++'           : [ 'clang'     ] ,
+"             \ 'c'             : [ 'clang'     ] ,
+"             \ 'systemverilog' : [ 'verilator' ] ,
+"             \ 'verilog'       : [ 'verilator' ]
 "             \}
-" let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012"'
-" let g:ale_c_build_dir_names = ['build', 'bin']
-" let g:ale_c_build_dir = './'
-" let g:ale_c_parse_compile_commands = 1
-" let g:ale_c_parse_makefile = 0
+let g:ale_linters = {
+            \ 'systemverilog' : ['verilator'],
+            \ 'verilog'       : ['verilator'],
+            \ 'verilog_systemverilog' : ['verilator']
+            \ }
+
+let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012"'
+let g:ale_c_build_dir_names = ['build', 'bin']
+let g:ale_c_build_dir = './'
+let g:ale_c_parse_compile_commands = 1
+let g:ale_c_parse_makefile = 0
 
 "=== 
 "=== coc.nvim
 "===
 let g:coc_global_extensions = [
-    \ 'coc-snippets' ]
+    \ 'coc-snippets' 
+    \,'coc-translator'
+    \]
 
-source ~/.vim/coc_vimrc
+" source ~/.vim/coc_vimrc
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
+" xmap <leader>f <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+augroup mygroup
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>qf  <Plug>(coc-fix-current)
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
+command! -nargs=0 Format :call CocAction('format')
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" source 
+"
 imap <C-l> <Plug>(coc-snippets-expand)
 let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-n>'
 
-" let g:coc_snippet_next = '<tab>'
+
 
 " ===
 " === markdown Preview
@@ -500,19 +622,19 @@ let g:calendar_google_task = 1
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
-	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
-	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
-	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
-	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
-	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
-	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
-	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
-	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_right)
-	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_start_insert)
-	autocmd FileType calendar nmap <buffer> K <Plug>(calendar_start_insert_head)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-k> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
 	" unmap <C-n>, <C-p> for other plugins
-	autocmd FileType calendar nunmap <buffer> <C-n>
-	autocmd FileType calendar nunmap <buffer> <C-p>
+	autocmd FileType calendar nunmap <buffer> <C-m>
+	autocmd FileType calendar nunmap <buffer> <C-b>
 augroup END
 
 
@@ -524,7 +646,9 @@ let g:rainbow_active = 1
 " ===
 " === tabular
 " ===
-vmap tb :Tabularize /
+vmap tbb :Tabularize /
+vmap tbl :Tabularize //l0<left><left><left>
+vmap tbr :Tabularize //r0<Left><left><left>
 
 
 " ===
@@ -546,11 +670,13 @@ let g:any_jump_window_height_ratio = 0.9
 " let g:ultiSnipsSnippetDirectories=['/home/centos/.vim/Ultisnips']
 
 " ===
-" === auto pairs
+" === auto-pairs
 " let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"'}
 " let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'"}
 let g:AutoPairsMoveCharacter = "()[]{}'"
+" inoremap <buffer> <silent> <BS> <C-R>=AutoPairsDelete()<CR>
+" let g:AutoPairsMapBS = 1
 
 
 " === 
@@ -559,5 +685,4 @@ let g:AutoPairsMoveCharacter = "()[]{}'"
 nnoremap <leader>vi :VerilogFollowInstance<CR>
 nnoremap <leader>vp :VerilogFollowPort<CR>
 nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
-
 

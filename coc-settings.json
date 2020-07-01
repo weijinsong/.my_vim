@@ -12,10 +12,41 @@
                     "snippetSupport" : true
                 }
             }
-        },
-        "svls": {
-            "command": "svls",
-            "filetypes": ["systemverilog","verilog"]
         }
+//      ,  "svls": {
+//            "command": "svls",
+//            "filetypes": ["systemverilog","verilog"]
+//        }
+    }
+    , "translator.toLang" :{
+          "type"        : "string"
+        , "default"     : "zh"
+        , "description" : "Target language"
+    }
+    , "translator.enngines" : {
+          "type" : "array"
+        , "default" : [
+            "bing" 
+            , "google"
+            , "youdao"
+            , "haici"
+        ]
+    }
+    , "translator.maxsize" : {
+          "type" : "number"
+        , "default" : 5000
+        , "description" : "Max history count"
+    }
+    , "translator.window.maxWidth" : {
+          "type" : "number"
+        , "default" : 999
+    }
+    , "translator.window.maxHeight" : {
+          "type" : "number"
+        , "default" : 999
+    }
+    
+    , "snippets.extends" : {
+        "verilog_systemverilog" : ["verilog"]
     }
 }

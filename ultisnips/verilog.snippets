@@ -1,33 +1,18 @@
-# A valid snippet should starts with:
-#
-#		snippet trigger_word [ "description" [ options ] ]
-#
-# and end with:
-#
-#		endsnippet
-#
-# snippet if "if ... then (if)"
-# if ${2:[[ ${1:condition} ]]}; then
-#         ${0:#statements}
-# fi
-# endsnippet
-# Snippet options:
-#
-#		b - Beginning of line.
-#		i - In-word expansion.
-#		w - Word boundary.
-#		r - Regular expression
-#		e - Custom context snippet
-#		A - Snippet will be triggered automatically, when condition matches.
-#
-# Basic example:
-#
-#		snippet emitter "emitter properties" b
-#		private readonly ${1} = new Emitter<$2>()
-#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
-#		endsnippet
-#
-# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+# ===
+# === CopyRight 
+snippet copyright "Copyright of this file" b
+/*=============================================================
+* 	Copyright (C) `date +%Y` USTC All rights reserved.
+* 	
+* 	filename : `!v expand('%:t')`
+* 	Author: Wei Jinsong
+* 	Mail: vitus@mail.ustc.edu.cn
+* 	Date `date +%Y-%m-%d`
+* 	Abstract 
+* 		${0}
+*
+=============================================================*/
+endsnippet
 
 # === 
 # === module create
@@ -67,7 +52,7 @@ begin
 end
 endsnippet
 
-snippet alwc "always @(posedge ${1:clk} or negedge ${2:nrst})" b
+snippet always "always @(posedge ${1:clk} or negedge ${2:nrst})" b
 always @(posedge ${1:clk} or negedge ${2:nrst})
 begin
 	if (~${2::nrst}) begin
