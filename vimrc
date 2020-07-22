@@ -5,10 +5,18 @@
 " 
 
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
-                        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+if has('nvim')
+    if empty(glob('~/.config/nvim/autoload/plug.vim'))
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs 
+                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
+    endif
+else 
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
+                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+    endif
 endif
 
 
@@ -147,7 +155,13 @@ noremap \s :%s//g<left><left>
 "========================
 "=== Install Vim Plug ===
 "===
-call plug#begin('~/.vim/plugged')
+
+if has('nvim')
+    call plug#begin('~/.config/nvim/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
+
 Plug 'dense-analysis/ale'
 
 " General Highlighter
@@ -403,10 +417,15 @@ let g:ale_cpp_cppcheck_options = ''
 "             \ 'systemverilog' : [ 'verilator' ] ,
 "             \ 'verilog'       : [ 'verilator' ]
 "             \}
+" let g:ale_linters = {
+"             \ 'systemverilog' : ['verilator'],
+"             \ 'verilog'       : ['verilator'],
+"             \ 'verilog_systemverilog' : ['verilator']
+"             \ }
 let g:ale_linters = {
-            \ 'systemverilog' : ['verilator'],
-            \ 'verilog'       : ['verilator'],
-            \ 'verilog_systemverilog' : ['verilator']
+            \ 'systemverilog' : ['vcs'],
+            \ 'verilog'       : ['vcs'],
+            \ 'verilog_systemverilog' : ['vcs']
             \ }
 
 let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012"'
