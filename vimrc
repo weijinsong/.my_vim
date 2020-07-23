@@ -129,9 +129,9 @@ noremap <right> :vertical resize +2<CR>
 "=== 
 "=== Tab management
 "===
-noremap Tu :tabe
-noremap Tn :-tabnext<CR>
-noremap TN :+tabnext<CR>
+noremap tu :tabe
+noremap tj :-tabnext<CR>
+noremap tk :+tabnext<CR>
 " noremap Tmn :-tabmove<CR>
 " noremap TmN :+tabmove<CR>
 
@@ -551,9 +551,11 @@ nmap <leader>fsv :vsp<CR> :FZF<space>
 " === vim-bookmarks
 " ===
 let g:bookmark_no_default_key_mappints = 1 
-nmap bmt <Plug>BookmarkToogle
-nmap bma <Plug>BookmarkAnnotate
-nmap bms <Plug>bookmarkShowAll
+nmap \bmt <Plug>BookmarkToggle
+nmap \bma <Plug>BookmarkAnnotate
+nmap \bms <Plug>BookmarkShowAll
+nmap \bmj <Plug>BookmarkNext
+nmap \bmk <Plug>BookmarkPre
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 let g:bookmark_highlight_lines = 1
