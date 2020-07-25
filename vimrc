@@ -5,13 +5,19 @@
 " 
 
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
-                        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+if has('nvim')
+    if empty(glob('~/.config/nvim/autoload/plug.vim'))
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs 
+                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
+    endif
+else 
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
+                            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+    endif
 endif
-
-
 
 if v:progname =~? "evim"
   finish
@@ -132,6 +138,8 @@ noremap <right> :vertical resize +2<CR>
 noremap tu :tabe
 noremap tj :-tabnext<CR>
 noremap tk :+tabnext<CR>
+noremap <F3> :-tabnext<CR>
+noremap <F4> :+tabnext<CR>
 " noremap Tmn :-tabmove<CR>
 " noremap TmN :+tabmove<CR>
 
@@ -147,7 +155,12 @@ noremap \s :%s//g<left><left>
 "========================
 "=== Install Vim Plug ===
 "===
-call plug#begin('~/.vim/plugged')
+if has('nvim')
+    call plug#begin('~/.config/nvim/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
+
 Plug 'dense-analysis/ale'
 
 " General Highlighter
@@ -161,7 +174,9 @@ Plug 'tomasiser/vim-code-dark'
 
 " Navigation
 Plug 'preservim/nerdtree'
+" Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'antoinemadec/coc-fzf'
 Plug 'airblade/vim-rooter'
 Plug 'pechorin/any-jump.vim'
 " Plug 'Yggdroot/LeaderF', {'do': './install.sh'}
@@ -447,10 +462,17 @@ else
 endif
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tabe')<CR>
+nmap <silent> gy :call CocActionAsync('jumpTypeDefinition', 'tabe')<CR>
+nmap <silent> gi :call CocActionAsync('jumpImplementation', 'tabe')<CR>
+nmap <silent> gr :call CocActionAsync('jumpReferences', 'tabe')<CR>
+
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -507,7 +529,7 @@ let g:coc_snippet_prev = '<c-n>'
 " ===
 " === markdown Preview
 " ===
-let g:mkdp_path_to_chrome = "firefox"
+let g:mkdp_path_to_chrome = "chromium-browser"
 let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_open = 0
@@ -542,10 +564,26 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_preview_window = 'right:60%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-nmap <leader>fsf :FZF<space>
-nmap <leader>fss :sp<CR> :FZF<space>
-nmap <leader>fsv :vsp<CR> :FZF<space>
+nmap <leader>fzf :FZF<space>
+nmap <leader>fzs :sp<CR> :FZF<space>
+nmap <leader>fzv :vsp<CR> :FZF<space>
+
+" === 
+" === coc-fzf
+" ===
+let g:coc_fzf_preview = ''
+let g:coc_fzf_opts = []
+nnoremap <silent> <leader>za  :<C-u>CocFzfList diagnostics<CR>
+nnoremap <silent> <leader>zb  :<C-u>CocFzfList diagnostics --current-buf<CR>
+nnoremap <silent> <leader>zc  :<C-u>CocFzfList commands<CR>
+nnoremap <silent> <leader>ze  :<C-u>CocFzfList extensions<CR>
+nnoremap <silent> <leader>zl  :<C-u>CocFzfList location<CR>
+nnoremap <silent> <leader>zo  :<C-u>CocFzfList outline<CR>
+nnoremap <silent> <leader>zs  :<C-u>CocFzfList symbols<CR>
+nnoremap <silent> <leader>zS  :<C-u>CocFzfList services<CR>
+nnoremap <silent> <leader>zp  :<C-u>CocFzfListResume<CR> 
 
 " ===
 " === vim-bookmarks
