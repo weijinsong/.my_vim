@@ -4,7 +4,6 @@
 " When started as "evim", evim.vim will already have done these settings.
 " 
 
-
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs 
@@ -102,10 +101,12 @@ set undodir=~/.undodir
 "===
 "=== Terminal Behaviors
 "===
-let g:neoterm_autoscroll=1
-autocmd TermOpen term://* startinsert
-command! Term  :set splitbelow |split |res -20 |term
-command! Vterm :set splitright |vsplit |term
+if has('nvim')
+    let g:neoterm_autoscroll=1
+    autocmd TermOpen term://* startinsert
+    command! Term  :set splitbelow |split |res -20 |term
+    command! Vterm :set splitright |vsplit |term
+end
 
 "===
 "=== Basic Mappings 
@@ -144,13 +145,19 @@ noremap <F4> :+tabnext<CR>
 " noremap TmN :+tabmove<CR>
 
 "=== find and replace
-noremap \s :%s//g<left><left>
+noremap \s :s//g<left><left>
 
 "=== Insert right bracket
 " imap{ {}<ESC>i<CR><ESC>O
 " imap{ {}<ESC>i
 
-
+"=== wildmenu 
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
+cnoremap <C-H> <Up>
+cnoremap <C-L> <C-Y>
+cnoremap <C-K> <C-P>
+cnoremap <C-J> <C-N>
 
 "========================
 "=== Install Vim Plug ===
@@ -186,7 +193,7 @@ Plug 'Yggdroot/LeaderF'
 Plug 'liuchengxu/vista.vim'
 
 " Debuger
-" Plug 'puremourning/vimspector', {'do': '.install_gadget.py --enable-c --enable-python --enable-go'}
+Plug 'puremourning/vimspector', {'do': '.install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
@@ -301,10 +308,17 @@ let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 " popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+if has('nvim')
+    let g:Lf_WindowPosition = 'popup'
+    let g:Lf_PreviewInPopup = 1
+    let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+    let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+else
+    let g:Lf_WindowPosition = 'left'
+    " let g:Lf_PreviewInPopup = 1
+    let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+    let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+endif
 
 let g:Lf_ShortcutF = "<leader>ff"
 noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
@@ -418,13 +432,14 @@ let g:ale_cpp_cppcheck_options = ''
 "             \ 'systemverilog' : [ 'verilator' ] ,
 "             \ 'verilog'       : [ 'verilator' ]
 "             \}
+
 let g:ale_linters = {
             \ 'systemverilog' : ['verilator'],
             \ 'verilog'       : ['verilator'],
             \ 'verilog_systemverilog' : ['verilator']
             \ }
 
-let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012"'
+let g:ale_verilog_verilator_options = '-D__VIM_ALE__ -sv --default-language "1800-2012"'
 let g:ale_c_build_dir_names = ['build', 'bin']
 let g:ale_c_build_dir = './'
 let g:ale_c_parse_compile_commands = 1
@@ -564,11 +579,21 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_preview_window = 'right:60%'
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-nmap <leader>fzf :FZF<space>
-nmap <leader>fzs :sp<CR> :FZF<space>
-nmap <leader>fzv :vsp<CR> :FZF<space>
+let g:fzf_buffers_jump = 1
+let g:fzf_action = {
+\ 'enter': 'vi',
+\ 'ctrl-t': 'tab split',
+\ 'ctrl-n': 'split',
+\ 'ctrl-m': 'vsplit' }
+
+nmap <leader>fzf :FZF<space><CR>
+
+" nmap <leader>fzs :sp<CR> :FZF<space>
+" nmap <leader>fzv :vsp<CR> :FZF<space>
+
+
 
 " === 
 " === coc-fzf
@@ -589,11 +614,11 @@ nnoremap <silent> <leader>zp  :<C-u>CocFzfListResume<CR>
 " === vim-bookmarks
 " ===
 let g:bookmark_no_default_key_mappints = 1 
-nmap \bmt <Plug>BookmarkToggle
-nmap \bma <Plug>BookmarkAnnotate
-nmap \bms <Plug>BookmarkShowAll
-nmap \bmj <Plug>BookmarkNext
-nmap \bmk <Plug>BookmarkPre
+nmap <leader>bmt <Plug>BookmarkToggle
+nmap <leader>bma <Plug>BookmarkAnnotate
+nmap <leader>bms <Plug>BookmarkShowAll
+nmap <leader>bmj <Plug>BookmarkNext
+nmap <leader>bmk <Plug>BookmarkPre
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 let g:bookmark_highlight_lines = 1
@@ -638,7 +663,7 @@ let g:VM_maps["Redo"]               = '<C-r>'
 " === 
 " === Far.vim
 " === 
-noremap F :F **/*<left><left><left><left><left>
+noremap F :F **/*<left><left><left><left>
 let g:far#mapping = {
                 \ "replace_undo" : ["l"],
                 \ }
