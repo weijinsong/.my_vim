@@ -342,8 +342,8 @@ noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 let g:Lf_CommandMap = {'<C-K>': ['<Up>']
                    \ , '<C-J>': ['<Down>']
-                   \ , '<C-X>': ['<C-N>']
-                   \ , '<C-]>': ['<C-M>']}
+                   \ , '<C-X>': ['<C-I>']
+                   \ , '<C-]>': ['<C-O>']}
 
 "===
 "=== vim-cpp-enhanced-highlight 
@@ -585,8 +585,9 @@ let g:fzf_buffers_jump = 1
 let g:fzf_action = {
 \ 'enter': 'vi',
 \ 'ctrl-t': 'tab split',
-\ 'ctrl-n': 'split',
-\ 'ctrl-m': 'vsplit' }
+\ 'ctrl-i': 'split',
+\ 'ctrl-o': 'vsplit'}
+
 
 nmap <leader>fzf :FZF<space><CR>
 
