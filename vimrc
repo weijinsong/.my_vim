@@ -97,6 +97,9 @@ set undofile
 set swapfile
 set undodir=~/.undodir
 
+if has('nvim')
+    set clipboard+=unnamedplus
+endif
 
 "===
 "=== Terminal Behaviors
@@ -250,6 +253,7 @@ Plug 'wincent/terminus'
 Plug 'nightsense/carbonized'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'vim-scripts/sudo.vim'
 
 call plug#end()
 
@@ -438,12 +442,12 @@ let g:ale_linters = {
             \ 'verilog'       : ['verilator'],
             \ 'verilog_systemverilog' : ['verilator']
             \ }
-
 let g:ale_verilog_verilator_options = '-D__VIM_ALE__ -sv --default-language "1800-2012"'
+
 let g:ale_c_build_dir_names = ['build', 'bin']
 let g:ale_c_build_dir = './'
 let g:ale_c_parse_compile_commands = 1
-let g:ale_c_parse_makefile = 0
+let g:ale_c_parse_makefile = 1
 
 "=== 
 "=== coc.nvim
