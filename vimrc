@@ -107,7 +107,7 @@ endif
 if has('nvim')
     let g:neoterm_autoscroll=1
     autocmd TermOpen term://* startinsert
-    command! Term  :set splitbelow |split |res -20 |term
+    command! Term  :set splitbelow |split |res -40 |term
     command! Vterm :set splitright |vsplit |term
 end
 
@@ -344,10 +344,13 @@ noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand
 noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
 noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
-let g:Lf_CommandMap = {'<C-K>': ['<Up>']
-                   \ , '<C-J>': ['<Down>']
-                   \ , '<C-X>': ['<C-I>']
+" let g:Lf_CommandMap = {'<C-K>': ['<Up>']
+"                    \ , '<C-J>': ['<Down>']
+"                    \ , '<C-X>': ['<C-I>']
+"                    \ , '<C-]>': ['<C-O>']}
+let g:Lf_CommandMap = {'<C-X>': ['<C-I>']
                    \ , '<C-]>': ['<C-O>']}
+
 
 "===
 "=== vim-cpp-enhanced-highlight 
@@ -455,6 +458,7 @@ let g:ale_c_parse_makefile = 1
 let g:coc_global_extensions = [
     \ 'coc-snippets' 
     \,'coc-translator'
+    \,'coc-pyls'
     \]
 
 " source ~/.vim/coc_vimrc
