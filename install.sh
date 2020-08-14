@@ -16,6 +16,10 @@ ln -s $(pwd)/vimrc ~/.vimrc
 ln -s $(pwd)/coc-settings.json ~/.vim/coc-settings.json
 
 source ./SoureMe
+cd ./local
+tar -xvf node-v14.8.0-linux-x64.tar.xz
+mv node-v14.8.0-linux-x64 node
+cd ../
 yarn config set registry 'https://registry.npm.taobao.org'
 vim
 
