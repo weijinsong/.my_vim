@@ -18,6 +18,7 @@
 //            "filetypes": ["systemverilog","verilog"]
 //        }
     }
+    , "npm.binPath" : "$HOME/.my_vim/local/node/bin/npm"
     , "translator.toLang" :{
           "type"        : "string"
         , "default"     : "zh"

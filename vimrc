@@ -199,7 +199,7 @@ Plug 'liuchengxu/vista.vim'
 Plug 'puremourning/vimspector', {'do': '.install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'do': '~/.my_vim/local/yarn/bin/yarn install --frozen-lockfile'}
 " Plug 'wellle/tmux-complete.vim'
 
 " Snippets
@@ -460,6 +460,7 @@ let g:coc_global_extensions = [
     \,'coc-translator'
     \,'coc-pyls'
     \]
+let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
 if has("patch-8.1.1564")

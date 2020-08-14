@@ -13,6 +13,12 @@ ln -s $(pwd)/coc-settings.json ~/.config/nvim/coc-settings.json
 
 pwd
 ln -s $(pwd)/vimrc ~/.vimrc
+ln -s $(pwd)/coc-settings.json ~/.vim/coc-settings.json
+
+source ./SoureMe
+yarn config set registry 'https://registry.npm.taobao.org'
+vim
+
 # ln -s $(pwd)/vimrc ~/.vim/init.vim
 # ln -s $(pwd)/coc-settings.json ~/.vim/coc-settings.json
 

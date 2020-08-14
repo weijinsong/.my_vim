@@ -1,0 +1,2 @@
+export PATH=$HOME/.my_vim/local/node/bin:$PATH
+export PATH=$HOME/.my_vim/local/yarn/bin:$PATH
