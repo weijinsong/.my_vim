@@ -469,7 +469,7 @@ let g:coc_global_extensions = [
     \,'coc-pyls'
     \,'coc-vimtex'
     \]
-let g:coc_node_path = '~/.my_vim/local/node/bin/node'
+" let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
 if has("patch-8.1.1564")
