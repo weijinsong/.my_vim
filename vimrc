@@ -71,7 +71,7 @@ set expandtab
 set number
 set hlsearch
 autocmd BufEnter * lcd %:p:h
-set wrap! 
+" set wrap!
 set nocp
 set tags=tags
 set scrolloff=4
@@ -97,6 +97,8 @@ set undofile
 set swapfile
 set undodir=~/.undodir
 
+set encoding=utf-8 fileencodings=ucs-bom,utf-8,gbk,gb18030,latin1 termencoding=utf-8
+
 if has('nvim')
     set clipboard+=unnamedplus
 endif
@@ -110,6 +112,7 @@ if has('nvim')
     command! Term  :set splitbelow |split |res -40 |term
     command! Vterm :set splitright |vsplit |term
 end
+tnoremap <ESC> <c-\><c-n>
 
 "===
 "=== Basic Mappings 
@@ -163,7 +166,7 @@ cnoremap <C-K> <C-P>
 cnoremap <C-J> <C-N>
 
 "========================
-"=== Install Vim Plug ===
+"=== Install Vim-Plug ===
 "===
 if has('nvim')
     call plug#begin('~/.config/nvim/plugged')
@@ -216,7 +219,8 @@ Plug 'mbbill/undotree'
 Plug 'vhda/verilog_systemverilog.vim'
 
 " Tex
-" Plug 'legvag/vimtex'
+" Plug 'lervag/vimtex'
+Plug 'lervag/vimtex'
 
 " JSON
 " Plug 'elzr/vim-json'
@@ -254,6 +258,7 @@ Plug 'nightsense/carbonized'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'vim-scripts/sudo.vim'
+
 
 call plug#end()
 
@@ -303,6 +308,7 @@ map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
+let g:NERDTreeShowHidden=1
 
 "===
 "=== LeaderF
@@ -443,10 +449,12 @@ let g:ale_cpp_cppcheck_options = ''
 let g:ale_linters = {
             \ 'systemverilog' : ['verilator'],
             \ 'verilog'       : ['verilator'],
-            \ 'verilog_systemverilog' : ['verilator']
+            \ 'verilog_systemverilog' : ['verilator'],
+            \ 'tex' : ['chktex'],
+            \ 'latex' : ['chktex']
             \ }
-let g:ale_verilog_verilator_options = '-D__VIM_ALE__ -sv --default-language "1800-2012"'
-
+let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012" -f verilator.vc'
+ 
 let g:ale_c_build_dir_names = ['build', 'bin']
 let g:ale_c_build_dir = './'
 let g:ale_c_parse_compile_commands = 1
@@ -459,6 +467,7 @@ let g:coc_global_extensions = [
     \ 'coc-snippets' 
     \,'coc-translator'
     \,'coc-pyls'
+    \,'coc-vimtex'
     \]
 let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
@@ -553,7 +562,7 @@ let g:coc_snippet_prev = '<c-n>'
 " ===
 " === markdown Preview
 " ===
-let g:mkdp_path_to_chrome = "chromium-browser"
+let g:mkdp_path_to_chrome = "chromium"
 let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_open = 0
@@ -760,4 +769,10 @@ let g:AutoPairsMoveCharacter = "()[]{}'"
 nnoremap <leader>vi :VerilogFollowInstance<CR>
 nnoremap <leader>vp :VerilogFollowPort<CR>
 nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
+
+" ===
+" === latex 
+" === 
+let g:tex_flavor = 'latex'
+let g:vimtex_view_general_viewer = 'zathura'
 
