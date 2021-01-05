@@ -202,7 +202,7 @@ Plug 'liuchengxu/vista.vim'
 Plug 'puremourning/vimspector', {'do': '.install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
-Plug 'neoclide/coc.nvim', {'do': '~/.my_vim/local/yarn/bin/yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'wellle/tmux-complete.vim'
 
 " Snippets
@@ -466,9 +466,13 @@ let g:ale_c_parse_makefile = 1
 let g:coc_global_extensions = [
     \ 'coc-snippets' 
     \,'coc-translator'
-    \,'coc-pyls'
     \,'coc-vimtex'
+    \,'coc-python'
+    \,'coc-jedi'
+    \,'coc-pyright'
     \]
+
+    " \,'coc-pyls'
 " let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
