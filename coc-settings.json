@@ -53,4 +53,16 @@
     , "snippets.ultisnips.directories" : [
       "$HOME/.my_vim/ultisnips"
     ]
+    , "python.jediEnable" : false
+    , "python.pythonPath" : "python3"
+    , "python.setInterpreter" : [ "/usr/bin/python3" ]
+    , "python.formatting.autopep8Path" : "autopep8"
+    , "python.linting.pylintEnabled" : false
+    , "python.linting.pylintPath" : "/home/centos/.local/bin/pylint"
+    , "python.linting.pylintArgs" : [
+          "--errors-only",
+          "--generated-members", "torch.*"
+    ]
+    , "python.linting.pyrightEnabled": true
+    , "python.linting.flake8Enabled" : false
 }

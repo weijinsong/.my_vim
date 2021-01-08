@@ -70,7 +70,7 @@ set shiftwidth=4
 set expandtab
 set number
 set hlsearch
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
 " set wrap!
 set nocp
 set tags=tags
@@ -214,9 +214,13 @@ Plug 'mbbill/undotree'
 
 " Autoformat
 " Plug 'Chie192/vim-autoformat'
+Plug 'tell-k/vim-autopep8'
 
 " verilog_systemverilog
 Plug 'vhda/verilog_systemverilog.vim'
+
+" vim-flake8
+" Plug 'nvie/vim-flake8'
 
 " Tex
 " Plug 'lervag/vimtex'
@@ -453,6 +457,7 @@ let g:ale_linters = {
             \ 'tex' : ['chktex'],
             \ 'latex' : ['chktex']
             \ }
+
 let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012" -f verilator.vc'
  
 let g:ale_c_build_dir_names = ['build', 'bin']
@@ -660,12 +665,13 @@ let g:undotree_ShortIndicators = 1
 let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
+
 function g:Undotree_CustomMap()
 	nmap <buffer> u <plug>UndotreeNextState
 	nmap <buffer> e <plug>UndotreePreviousState
 	nmap <buffer> U 5<plug>UndotreeNextState
 	nmap <buffer> E 5<plug>UndotreePreviousState
-endfunc
+endfunction
 
 " === 
 " === vim-visual-multi
@@ -779,4 +785,12 @@ nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
 " === 
 let g:tex_flavor = 'latex'
 let g:vimtex_view_general_viewer = 'zathura'
+
+" === 
+" === python3
+" === 
+
+" === autopep8
+let g:autopep8_max_line_length=79
+let g:autopep8_on_save=0
 
