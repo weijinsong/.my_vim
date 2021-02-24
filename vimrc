@@ -253,6 +253,9 @@ Plug 'gcmt/wildfire.vim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/nerdcommenter'
 
+" shu ru fa
+" Plug 'vim-scripts/VimIM'
+
 " Other visual enhancement
 Plug 'ryanoasis/vim-devicons'
 Plug 'luochen1990/rainbow'
@@ -473,9 +476,12 @@ let g:coc_global_extensions = [
     \,'coc-translator'
     \,'coc-vimtex'
     \,'coc-python'
-    \,'coc-jedi'
     \,'coc-pyright'
     \]
+
+
+
+    " \,'coc-jedi'
 
     " \,'coc-pyls'
 " let g:coc_node_path = '~/.my_vim/local/node/bin/node'
@@ -794,3 +800,12 @@ let g:vimtex_view_general_viewer = 'zathura'
 let g:autopep8_max_line_length=79
 let g:autopep8_on_save=0
 
+" === VimIM
+let g:vimim_cloud = 'google,sogou,baidu,qq'  
+let g:vimim_map = 'tab_as_gi'  
+let g:vimim_mode = 'dynamic'
+let g:vimim_mycloud = 0  
+let g:vimim_plugin = '$HOME/.config/nvim/plugged/VimIM/plugin/vimim.vim'
+let g:vimim_punctuation = 2  
+let g:vimim_shuangpin = 0  
+let g:vimim_toggle = 'pinyin,google,sogou' 
