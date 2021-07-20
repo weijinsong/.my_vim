@@ -184,6 +184,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/lightline.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tomasiser/vim-code-dark'
+Plug 'thaerkh/vim-indentguides'
 
 " Navigation
 Plug 'preservim/nerdtree'
@@ -874,3 +875,10 @@ let g:vimim_toggle = 'pinyin,baidu'
 let g:hl_matchit_enable_on_vim_startup = 1
 let g:hl_matchit_hl_groupname = 'Type'
 let g:hl_matchit_hl_priority = 10
+
+
+" === thaerkh/vim-indentguides
+" let g:indentguides_spacechar = ''
+" let g:indentguides_tabchar = ''
+let g:indentguides_firstleve = get(g:, 'indentguides_firstleve', 1)
+let g:indentguides_toggleListMode = get(g:, 'indentguides_toggleListMode', 0)
