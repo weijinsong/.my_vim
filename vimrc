@@ -71,7 +71,7 @@ set expandtab
 set number
 set hlsearch
 " autocmd BufEnter * lcd %:p:h
-" set wrap!
+set wrap!
 set nocp
 set tags=tags
 set scrolloff=4
@@ -117,8 +117,8 @@ tnoremap <ESC> <c-\><c-n>
 "===
 "=== Basic Mappings 
 let mapleader="\\"
-noremap <leader>rcc :tabe ~/.vimrc<CR>
-noremap <leader>rcs :source ~/.vimrc<CR>
+noremap <leader>ev :tabe ~/.vimrc<CR>
+noremap <leader>sv :source ~/.vimrc<CR>
 
 "===
 "=== Window management
@@ -230,8 +230,12 @@ Plug 'lervag/vimtex'
 " Plug 'elzr/vim-json'
 
 " Markdown
+" Plug 'davidgranstrom/nvim-markdown-preview'
+
 Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle', 'for':['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', {'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
@@ -252,6 +256,7 @@ Plug 'tpope/vim-surround'
 Plug 'gcmt/wildfire.vim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/nerdcommenter'
+Plug 'vimtaku/hl_matchit.vim'
 
 " shu ru fa
 " Plug 'vim-scripts/VimIM'
@@ -261,10 +266,13 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'luochen1990/rainbow'
 " Plug 'mg979/vim-xtabline'
 Plug 'wincent/terminus'
-Plug 'nightsense/carbonized'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'vim-scripts/sudo.vim'
+
+" colorscheme
+Plug 'nightsense/carbonized'
+Plug 'junegunn/seoul256.vim'
 
 
 call plug#end()
@@ -274,19 +282,28 @@ call plug#end()
 " ===
 " let g:codedark_conservative = 0
 " colorscheme codedark
-syntax on
-set t_Co=256
-" set background=dark
-set termguicolors
 
-" carbonized 
-colorscheme carbonized-dark
+let g:my_colorscheme_option = 2
 
-let g:lightline= {
-  \ 'colorscheme': 'codedark',
-  \ }
-let g:carbonized_dark_CursorLineNr = 'on'
-let g:carbonized_dark_LineNr = 'off'
+if g:my_colorscheme_option == 1
+    " option 1 : carbonized {
+    syntax on
+    set t_Co=256
+    set termguicolors
+    colorscheme carbonized-dark
+    let g:lightline= {
+      \ 'colorscheme': 'codedark',
+      \ }
+    let g:carbonized_dark_CursorLineNr = 'on'
+    let g:carbonized_dark_LineNr = 'off'
+    " }
+elseif g:my_colorscheme_option == 2
+    " option 2 : 
+    let g:seoul256_background = 234  " range: 233(darkset)~239(lightest)
+    set background=dark
+
+    colorscheme seoul256
+endif
 
 
 " colorscheme deep-space
@@ -311,7 +328,9 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " ===
 " === Nerdtree 
 " ===
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
@@ -379,7 +398,7 @@ let g:cpp_concepts_highlight = 1
 let c_no_curly_error=1
 
 "===
-"=== nerdcomment
+"=== nerdcommenter
 "===
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -477,13 +496,9 @@ let g:coc_global_extensions = [
     \,'coc-vimtex'
     \,'coc-python'
     \,'coc-pyright'
+    \,'coc-rime'
     \]
 
-
-
-    " \,'coc-jedi'
-
-    " \,'coc-pyls'
 " let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
@@ -573,18 +588,53 @@ let g:coc_snippet_next = '<c-j>'
 let g:coc_snippet_prev = '<c-n>'
 
 
-
 " ===
-" === markdown Preview
+" === markdown Preview nvim
 " ===
-let g:mkdp_path_to_chrome = "chromium"
-let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
 let g:mkdp_auto_start = 0
-let g:mkdp_auto_open = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
+" let g:mkdp_open_ip = '172.20.240.1'
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = 'chrome'
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0
+    \ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
+let g:mkdp_filetypes = ['markdown']
+
+
+
+
+" ===
+" === markdown Preview
+" ===
+" let g:mkdp_path_to_chrome =  "/mnt/c/Program\ Files\ (x86)/Microsoft/Edge/Application/msedge.exe"
+" let g:mkdp_path_to_chrome =  "/mnt/d/.usr/ws_bin/msedge"
+" let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
+" let g:mkdp_auto_start = 0
+" let g:mkdp_auto_open = 0
+" let g:mkdp_auto_close = 1
+" let g:mkdp_refresh_slow = 0
+" let g:mkdp_command_for_global = 0
+" let g:mkdp_open_to_the_world = 1
 
 " === 
 " === vim-table-mode
@@ -648,11 +698,16 @@ nnoremap <silent> <leader>zp  :<C-u>CocFzfListResume<CR>
 " === vim-bookmarks
 " ===
 let g:bookmark_no_default_key_mappints = 1 
-nmap <leader>bmt <Plug>BookmarkToggle
-nmap <leader>bma <Plug>BookmarkAnnotate
-nmap <leader>bms <Plug>BookmarkShowAll
-nmap <leader>bmj <Plug>BookmarkNext
-nmap <leader>bmk <Plug>BookmarkPre
+nmap bmt <Plug>BookmarkToggle
+nmap bma <Plug>BookmarkAnnotate
+nmap bms <Plug>BookmarkShowAll
+nmap bmj <Plug>BookmarkNext
+nmap bmk <Plug>BookmarkPre
+" nmap <leader>bmt <Plug>BookmarkToggle
+" nmap <leader>bma <Plug>BookmarkAnnotate
+" nmap <leader>bms <Plug>BookmarkShowAll
+" nmap <leader>bmj <Plug>BookmarkNext
+" nmap <leader>bmk <Plug>BookmarkPre
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 let g:bookmark_highlight_lines = 1
@@ -754,7 +809,7 @@ vmap tbr :Tabularize //r0<Left><left><left>
 " ===
 " === any-jump
 " ===
-nnoremap <leader>ju :AnyJump<CR>
+nnoremap <leader>aj :AnyJump<CR>
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
 
@@ -782,9 +837,12 @@ let g:AutoPairsMoveCharacter = "()[]{}'"
 " === 
 " === verilog_systemverilog
 " ===
-nnoremap <leader>vi :VerilogFollowInstance<CR>
-nnoremap <leader>vp :VerilogFollowPort<CR>
-nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
+nnoremap fi :VerilogFollowInstance<CR>
+nnoremap fp :VerilogFollowPort<CR>
+nnoremap gs :VerilogGotoInstanceStart<CR>
+" nnoremap <leader>vfi :VerilogFollowInstance<CR>
+" nnoremap <leader>vfp :VerilogFollowPort<CR>
+" nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
 
 " ===
 " === latex 
@@ -801,11 +859,18 @@ let g:autopep8_max_line_length=79
 let g:autopep8_on_save=0
 
 " === VimIM
-let g:vimim_cloud = 'google,sogou,baidu,qq'  
+" let g:vimim_cloud = 'google,sogou,baidu,qq'
+let g:vimim_cloud = 'baidu'
 let g:vimim_map = 'tab_as_gi'  
 let g:vimim_mode = 'dynamic'
 let g:vimim_mycloud = 0  
-let g:vimim_plugin = '$HOME/.config/nvim/plugged/VimIM/plugin/vimim.vim'
+" let g:vimim_plugin = '$HOME/.config/nvim/plugged/VimIM/plugin/vimim.vim'
+let g:vimim_plugin = '/home/ubuntu/.config/nvim/plugged/VimIM/plugin'
 let g:vimim_punctuation = 2  
 let g:vimim_shuangpin = 0  
-let g:vimim_toggle = 'pinyin,google,sogou' 
+let g:vimim_toggle = 'pinyin,baidu' 
+
+" === vimtaku/hl_matchit
+let g:hl_matchit_enable_on_vim_startup = 1
+let g:hl_matchit_hl_groupname = 'Type'
+let g:hl_matchit_hl_priority = 10
