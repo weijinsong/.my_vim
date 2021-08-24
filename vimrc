@@ -336,6 +336,8 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
 let g:NERDTreeShowHidden=1
+autocmd FileType nerdtree nmap <leader>rf :NERDTreeRefreshRoot
+
 
 "===
 "=== LeaderF
