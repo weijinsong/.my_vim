@@ -15,6 +15,25 @@ pwd
 ln -s $(pwd)/vimrc ~/.vimrc
 ln -s $(pwd)/coc-settings.json ~/.vim/coc-settings.json
 
+
+echo "shell is "
+echo $0
+
+echo "# === vtags" >> ~
+
+if [ $0 == "-zsh" ]
+    echo "# === vtags" >> ~/.zshrc
+    echo "alias vtags='python ~/.my_vim/vtags-3.01/vtags.py" >> ~/.zshrc
+then
+elif [ $0 == "bash" ]
+    echo "# === vtags" >> ~/.bashrc
+    echo "alias vtags='python ~/.my_vim/vtags-3.01/vtags.py" >> ~/.bashrc
+then
+elif [ $0 == "tcsh" ]
+    echo "# === vtags" >> ~/.cshrc
+    echo "alias vtags 'python ~/.my_vim/vtags-3.01/vtags.py" >> ~/.cshrc
+fi
+
 # source ./SoureMe
 # cd ./local
 # tar -xvf node-v14.8.0-linux-x64.tar.xz

@@ -57,7 +57,8 @@ always @(posedge ${1:clk} or negedge ${2:nrst})
 begin
 	if (~${2::nrst}) begin
 		${3:// reset}
-	end else begin
+	end 
+	else begin
 		${0:// body}	
 	end
 end
@@ -90,5 +91,10 @@ endsnippet
 snippet time "Description" b
 \`timescale ${1}/${2}
 ${0}
+endsnippet
+
+# === cut line
+snippet cutline "cutline" b
+// ========================== ${0} ========================
 endsnippet
 

@@ -134,8 +134,8 @@ noremap <leader>w3 <C-w>3w
 noremap <leader>w4 <C-w>4w
 
 "=== Resize splits with arrow keys
-noremap <up> : res +2<CR>
-noremap <down> :res -2<CR>
+noremap <up> : res -2<CR>
+noremap <down> :res +2<CR>
 noremap <left> :vertical resize -2<CR>
 noremap <right> :vertical resize +2<CR>
 
@@ -171,7 +171,7 @@ cnoremap <C-J> <C-N>
 if has('nvim')
     call plug#begin('~/.config/nvim/plugged')
 else
-    call plug#begin('~/.vim/plugged')
+    call plug#begin('~/.config/nvim/plugged')
 endif
 
 Plug 'dense-analysis/ale'
@@ -228,7 +228,7 @@ Plug 'vhda/verilog_systemverilog.vim'
 Plug 'lervag/vimtex'
 
 " JSON
-" Plug 'elzr/vim-json'
+Plug 'elzr/vim-json'
 
 " Markdown
 " Plug 'davidgranstrom/nvim-markdown-preview'
@@ -286,11 +286,12 @@ call plug#end()
 
 let g:my_colorscheme_option = 2
 
+syntax on
+set t_Co=256
+set termguicolors
+
 if g:my_colorscheme_option == 1
     " option 1 : carbonized {
-    syntax on
-    set t_Co=256
-    set termguicolors
     colorscheme carbonized-dark
     let g:lightline= {
       \ 'colorscheme': 'codedark',
@@ -302,7 +303,6 @@ elseif g:my_colorscheme_option == 2
     " option 2 : 
     let g:seoul256_background = 234  " range: 233(darkset)~239(lightest)
     set background=dark
-
     colorscheme seoul256
 endif
 
@@ -439,9 +439,12 @@ hi! SpellCap gui=undercurl guisp=blue
 hi! SpellRare gui=undercurl guisp=magenta
 
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-nmap <silent> <C-k> <Plug>(ale_previous_warp)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <leader>ad <Plug>(ale_detail)
+
+autocmd FileType json,markdown let g:vim_json_syntax_conceal = 0
+
+autocmd FileType verilog,systemverilog nmap <silent> <C-k> <Plug>(ale_previous_warp)
+autocmd FileType verilog,systemverilog nmap <silent> <C-j> <Plug>(ale_next_wrap)
+autocmd FileType verilog,systemverilog nmap <silent> <leader>ad <Plug>(ale_detail)
 
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
@@ -481,7 +484,8 @@ let g:ale_linters = {
             \ 'latex' : ['chktex']
             \ }
 
-let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012" -f verilator.vc'
+" let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012" -f verilator.vc'
+let g:ale_verilog_verilator_options = '-sv --default-language "1800-2012"'
  
 let g:ale_c_build_dir_names = ['build', 'bin']
 let g:ale_c_build_dir = './'
@@ -497,9 +501,10 @@ let g:coc_global_extensions = [
     \,'coc-vimtex'
     \,'coc-python'
     \,'coc-pyright'
-    \,'coc-rime'
     \]
 
+    " \,'coc-ccls'
+    " \,'coc-rime'
 " let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
@@ -524,8 +529,9 @@ if exists('*complete_info')
 else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+autocmd FileType cpp nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+autocmd FileType cpp nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 
 nmap <silent> gd :call CocActionAsync('jumpDefinition', 'tabe')<CR>
 nmap <silent> gy :call CocActionAsync('jumpTypeDefinition', 'tabe')<CR>
@@ -711,7 +717,7 @@ nmap bmk <Plug>BookmarkPre
 " nmap <leader>bmk <Plug>BookmarkPre
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
-let g:bookmark_highlight_lines = 1
+let g:bookmark_highlight_lines = 0
 let g:bookmark_manage_per_buffer = 1
 let g:bookmark_center = 1
 let g:bookmark_auto_close = 1
@@ -882,3 +888,15 @@ let g:hl_matchit_hl_priority = 10
 " let g:indentguides_tabchar = ''
 let g:indentguides_firstleve = get(g:, 'indentguides_firstleve', 1)
 let g:indentguides_toggleListMode = get(g:, 'indentguides_toggleListMode', 0)
+autocmd FileType json,markdown let g:indentguides_conceallevel = 0
+
+" === vim-json 
+autocmd FileType json,markdown let g:vim_json_syntax_conceal = 0
+
+
+" === vtags
+source ~/.my_vim/vtags-3.01/vtags_vim_api.vim
+
+" === auto_copyright
+
+

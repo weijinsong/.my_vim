@@ -3,10 +3,11 @@
         "ccls":{
             "command"       : "ccls" ,
             "filetypes"     : ["c", "cpp", "cuda", "objc", "objcpp", "h", "hpp", "cc"],
-            "rootPatterns"  : [".ccls-root", "compile_commands.json"],
-            "initializationOPtions" : {
+            "rootPatterns"  : [".ccls-root", "compile_commands.json", ".ccls", ".vim", ".git"],
+            "initializationOptions" : {
                 "cache": {
-                    "directory" : ".ccls-cache"
+                    "directory" : "/tmp/ccls-cache",
+                    "format" : "json"
                 },
                 "client" : {
                     "snippetSupport" : true
