@@ -61,6 +61,7 @@ endif
 "===============
 "=== Setup ====
 "===
+set autoread
 set ts=4
 set cursorline
 set cursorcolumn
@@ -230,13 +231,16 @@ Plug 'lervag/vimtex'
 " JSON
 Plug 'elzr/vim-json'
 
+" protobuf
+Plug 'uarun/vim-protobuf'
+
+" prototxt
+Plug 'chiphogg/vim-prototxt'
+
 " Markdown
 " Plug 'davidgranstrom/nvim-markdown-preview'
-
 Plug 'iamcco/mathjax-support-for-mkdp'
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'iamcco/markdown-preview.vim'
 Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle', 'for':['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', {'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
@@ -442,8 +446,6 @@ hi! SpellRare gui=undercurl guisp=magenta
 
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
-autocmd FileType json,markdown let g:vim_json_syntax_conceal = 0
-
 autocmd FileType verilog,systemverilog nmap <silent> <C-k> <Plug>(ale_previous_warp)
 autocmd FileType verilog,systemverilog nmap <silent> <C-j> <Plug>(ale_next_wrap)
 autocmd FileType verilog,systemverilog nmap <silent> <leader>ad <Plug>(ale_detail)
@@ -628,9 +630,6 @@ let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 let g:mkdp_filetypes = ['markdown']
-
-
-
 
 " ===
 " === markdown Preview
@@ -890,10 +889,11 @@ let g:hl_matchit_hl_priority = 10
 " let g:indentguides_tabchar = ''
 let g:indentguides_firstleve = get(g:, 'indentguides_firstleve', 1)
 let g:indentguides_toggleListMode = get(g:, 'indentguides_toggleListMode', 0)
-autocmd FileType json,markdown let g:indentguides_conceallevel = 0
+let g:indentguides_ignorelist = ['markdown', 'json']
+" autocmd FileType json let g:indentguides_conceallevel = 0
 
 " === vim-json 
-autocmd FileType json,markdown let g:vim_json_syntax_conceal = 0
+autocmd FileType json let g:vim_json_syntax_conceal = 0
 
 
 " === vtags
