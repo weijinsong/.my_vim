@@ -71,7 +71,7 @@ set expandtab
 set number
 set hlsearch
 " autocmd BufEnter * lcd %:p:h
-" set wrap!
+set wrap!
 set nocp
 set tags=tags
 set scrolloff=4
@@ -117,8 +117,8 @@ tnoremap <ESC> <c-\><c-n>
 "===
 "=== Basic Mappings 
 let mapleader="\\"
-noremap <leader>rcc :tabe ~/.vimrc<CR>
-noremap <leader>rcs :source ~/.vimrc<CR>
+noremap <leader>ev :tabe ~/.vimrc<CR>
+noremap <leader>sv :source ~/.vimrc<CR>
 
 "===
 "=== Window management
@@ -265,6 +265,7 @@ Plug 'nightsense/carbonized'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'vim-scripts/sudo.vim'
+Plug 'nightsense/carbonized'
 
 
 call plug#end()
@@ -311,7 +312,9 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " ===
 " === Nerdtree 
 " ===
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
@@ -477,13 +480,9 @@ let g:coc_global_extensions = [
     \,'coc-vimtex'
     \,'coc-python'
     \,'coc-pyright'
+    \,'coc-rime'
     \]
 
-
-
-    " \,'coc-jedi'
-
-    " \,'coc-pyls'
 " let g:coc_node_path = '~/.my_vim/local/node/bin/node'
 
 " source ~/.vim/coc_vimrc
@@ -577,7 +576,8 @@ let g:coc_snippet_prev = '<c-n>'
 " ===
 " === markdown Preview
 " ===
-let g:mkdp_path_to_chrome = "chromium"
+" let g:mkdp_path_to_chrome =  "/mnt/c/Program\ Files\ (x86)/Microsoft/Edge/Application/msedge.exe"
+let g:mkdp_path_to_chrome =  "/mnt/d/.usr/ws_bin/msedge"
 let g:mkdp_browserfunc = 'MKDP_browserfunc_default'
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_open = 0
@@ -754,7 +754,7 @@ vmap tbr :Tabularize //r0<Left><left><left>
 " ===
 " === any-jump
 " ===
-nnoremap <leader>ju :AnyJump<CR>
+nnoremap <leader>aj :AnyJump<CR>
 let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.9
 
@@ -782,8 +782,8 @@ let g:AutoPairsMoveCharacter = "()[]{}'"
 " === 
 " === verilog_systemverilog
 " ===
-nnoremap <leader>vi :VerilogFollowInstance<CR>
-nnoremap <leader>vp :VerilogFollowPort<CR>
+nnoremap <leader>vfi :VerilogFollowInstance<CR>
+nnoremap <leader>vfp :VerilogFollowPort<CR>
 nnoremap <leader>vgs :VerilogGotoInstanceStart<CR>
 
 " ===
@@ -801,11 +801,14 @@ let g:autopep8_max_line_length=79
 let g:autopep8_on_save=0
 
 " === VimIM
-let g:vimim_cloud = 'google,sogou,baidu,qq'  
+" let g:vimim_cloud = 'google,sogou,baidu,qq'
+let g:vimim_cloud = 'baidu'
 let g:vimim_map = 'tab_as_gi'  
 let g:vimim_mode = 'dynamic'
 let g:vimim_mycloud = 0  
-let g:vimim_plugin = '$HOME/.config/nvim/plugged/VimIM/plugin/vimim.vim'
+" let g:vimim_plugin = '$HOME/.config/nvim/plugged/VimIM/plugin/vimim.vim'
+let g:vimim_plugin = '/home/ubuntu/.config/nvim/plugged/VimIM/plugin'
 let g:vimim_punctuation = 2  
 let g:vimim_shuangpin = 0  
-let g:vimim_toggle = 'pinyin,google,sogou' 
+let g:vimim_toggle = 'pinyin,baidu' 
+
