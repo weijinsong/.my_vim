@@ -244,6 +244,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle', 'for':['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', {'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
+Plug 'ferrine/md-img-paste.vim'
 
 " Bookmarks
 Plug 'MattesGroeger/vim-bookmarks'
@@ -331,7 +332,7 @@ let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " ===
-" === Nerdtree 
+" === NERDtree 
 " ===
 " map <C-n> :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
@@ -340,6 +341,7 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeMapActivateNode = 'l'
 let g:NERDTreeShowHidden=1
+" let g:NERDTreeWinPos = 'right'
 autocmd FileType nerdtree nmap <leader>rf :NERDTreeRefreshRoot
 
 
@@ -706,11 +708,11 @@ nnoremap <silent> <leader>zp  :<C-u>CocFzfListResume<CR>
 " === vim-bookmarks
 " ===
 let g:bookmark_no_default_key_mappints = 1 
-nmap bmt <Plug>BookmarkToggle
-nmap bma <Plug>BookmarkAnnotate
-nmap bms <Plug>BookmarkShowAll
-nmap bmj <Plug>BookmarkNext
-nmap bmk <Plug>BookmarkPre
+nmap <leader>mt <Plug>BookmarkToggle
+nmap <leader>ma <Plug>BookmarkAnnotate
+nmap <leader>ms <Plug>BookmarkShowAll
+nmap <leader>mj <Plug>BookmarkNext
+nmap <leader>mk <Plug>BookmarkPre
 " nmap <leader>bmt <Plug>BookmarkToggle
 " nmap <leader>bma <Plug>BookmarkAnnotate
 " nmap <leader>bms <Plug>BookmarkShowAll
@@ -902,3 +904,7 @@ source ~/.my_vim/vtags-3.01/vtags_vim_api.vim
 " === auto_copyright
 
 
+" === md-img-paste
+autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+let g:mdip_imgdir = './png/'
+" let g:mdip_imgname = 'image'
